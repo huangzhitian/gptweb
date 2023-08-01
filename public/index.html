@@ -2743,10 +2743,7 @@
                             <div class="setDetail inputDetail apiDetail">
                                 <input class="inputTextClass" type="text" placeholder="sk-xxxxxx" id="keyInput"
                                     autocomplete="off" style="-webkit-text-security: disc;" />
-                                <div id="checkBillBtn" class="loaded">
-                                    
-                                    
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="setContent" id="quotaContent" style="display: none;">
@@ -4416,36 +4413,7 @@
             if (usedData > totalQuota) usedData = totalQuota;
             return [totalQuota, usedData, isSubsrcibed, expired];
         }
-        let checkingBill = false;
-        checkBillBtn.onclick = async () => {
-            if (checkingBill) return;
-            checkingBill = true;
-            checkBillBtn.className = "loading";
-            quotaContent.style.display = "none";
-            try {
-                let res = await checkBill();
-                if (!res) throw new Error("API error");
-                let [total, used, isSub, exp] = res;
-                usedQuotaBar.style.width = (used / total * 100).toFixed(2) + "%";
-                usedQuotaBar.parentElement.classList.remove("expiredBar");
-                usedQuota.textContent = "$" + used.toFixed(2);
-                let remain = total - used;
-                availableQuota.textContent = "$" + Math.floor(remain * 100) / 100;
-                if (isSub) {
-                    quotaTitle.textContent = translations[locale]["thisQuota"];
-                } else {
-                    let isExpired = new Date() > exp;
-                    if (isExpired) usedQuotaBar.parentElement.classList.add("expiredBar");
-                    let accessDate = formatDate(exp);
-                    quotaTitle.innerHTML = translations[locale]["freeTierTip"] + `<span style="color: ${isExpired ? "#e15b64" : "#99c959"} ">${accessDate}</span>`;
-                }
-                quotaContent.style.display = "block";
-            } catch (e) {
-                notyf.error(translations[locale]["errorAiKeyTip"]);
-            }
-            checkingBill = false;
-            checkBillBtn.className = "loaded";
-        }
+        
         const checkStorage = () => {
             let used = 0;
             for (let key in localStorage) {
