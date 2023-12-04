@@ -5589,7 +5589,7 @@
         const initSetting = () => {
             const modelEle = document.getElementById("preSetModel");
             let localModel = localStorage.getItem("modelVersion");
-            modelVersion = modelEle.value = localModel || "gpt-3.5-turbo";
+            modelVersion = modelEle.value = localModel || "gpt-3.5-turbo-1106";
             modelEle.onchange = () => {
                 modelVersion = modelEle.value;
                 localStorage.setItem("modelVersion", modelVersion);
